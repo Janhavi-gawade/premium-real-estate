@@ -27,6 +27,11 @@ export default function Navbar() {
   const isHeroLightPage = pathname === "/";
   const useTransparentDarkStyle = isHeroLightPage && !isScrolled && !isMenuOpen;
 
+  // Do not render public navbar on admin dashboard pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <>
       <nav

@@ -2,9 +2,11 @@
 
 import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 
 export default function WhatsAppButton() {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -14,6 +16,11 @@ export default function WhatsAppButton() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Do not render WhatsApp floating button on admin dashboard pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const phoneNumber = siteConfig.contact.whatsappNumber;
   const defaultMessage = `Hello Arth Properties (Monali Khedekar), I would like to inquire about property opportunities in Pune.`;

@@ -1,10 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Phone, Mail, MapPin, ShieldCheck, ArrowRight } from "lucide-react";
 import BrandLogo from "@/components/brand/BrandLogo";
 import { siteConfig } from "@/config/site";
 
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+
+  // Do not render public footer on admin dashboard pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <footer className="bg-[#0A1C33] text-white pt-16 pb-10 border-t border-slate-800">
