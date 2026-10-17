@@ -2,92 +2,172 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Bed, Bath, Square, MapPin } from "lucide-react";
-import { motion } from "framer-motion";
+import { Bed, Bath, Square, MapPin, ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { Property } from "@/types";
+import { formatIndianPrice, formatArea } from "@/lib/utils/formatters";
+import { siteConfig } from "@/config/site";
 
 interface PropertyCardProps {
-  property: {
-    id: string;
-    name: string;
-    type: string;
-    location: string;
-    price: string;
-    bedrooms: number;
-    bathrooms: number;
-    area: string;
-    description: string;
-    image: string;
-    featured: boolean;
-  };
+  property: Property;
   index?: number;
 }
 
-export default function PropertyCard({ property, index = 0 }: PropertyCardProps) {
+export default function PropertyCard({ property }: PropertyCardProps) {
+  const isSold = property.status === "sold";
+  const isRented = property.status === "rented";
+
+  const coverImage = property.images && property.images.length > 0
+    ? property.images[0]
+    : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80";
+
+  const formattedPrice = property.price_label || formatIndianPrice(property.price, property.transaction_type);
+
+  const whatsappMsg = `Hello Arth Properties, I am interested in "${property.title}" in ${property.location} (${formattedPrice}). Please share more details.`;
+  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+
+  const detailUrl = `/properties/${property.slug || property.id}`;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group bg-white border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500"
-    >
-      <div className="relative h-72 w-full overflow-hidden">
-        <Image
-          src={property.image}
-          alt={property.name}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        {property.featured && (
-          <div className="absolute top-4 left-4 bg-primary text-background text-xs uppercase tracking-widest px-3 py-1">
-            Featured
-          </div>
-        )}
-        <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-sm px-4 py-2 font-serif text-lg text-primary">
-          {property.price}
+    <div className="group relative bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-2xl hover:shadow-[#102D50]/12 hover:-translate-y-2 hover:border-[#102D50]/30 transition-all duration-500 ease-out flex flex-col h-full">
+      
+      {/* Top Accent Line on Hover */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#102D50] via-[#D71935] to-[#102D50] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+
+      {/* Cover Image & Badges */}
+      <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-900">
+        <Link href={detailUrl} className="block w-full h-full relative">
+          <Image
+            src={coverImage}
+            alt={property.title}
+            fill
+            unoptimized={coverImage.startsWith("data:")}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          />
+
+          {/* Luxury vignette overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/15 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+        </Link>
+
+        {/* Top Badges */}
+        <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-2 z-10">
+          <span className="bg-[#102D50]/90 backdrop-blur-md text-white text-[11.5px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-xs border border-white/10 group-hover:translate-x-0.5 transition-transform duration-300">
+            For {property.transaction_type === "buy" ? "Sale" : "Rent"}
+          </span>
+          <span className="bg-white/95 text-slate-800 text-[11.5px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg backdrop-blur-md shadow-xs border border-slate-200/80 group-hover:translate-x-0.5 transition-transform duration-300">
+            {property.category}
+          </span>
+          {property.featured && (
+            <span className="bg-gradient-to-r from-[#D71935] to-[#B8142C] text-white text-[11.5px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-1.5 group-hover:scale-105 transition-transform duration-300">
+              <Sparkles size={12} className="text-amber-200" />
+              <span>Featured</span>
+            </span>
+          )}
+        </div>
+
+        {/* Status Badge */}
+        <div className="absolute top-3.5 right-3.5 z-10">
+          {isSold ? (
+            <span className="bg-red-600/95 text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-md backdrop-blur-xs">
+              Sold Out
+            </span>
+          ) : isRented ? (
+            <span className="bg-amber-600/95 text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-md backdrop-blur-xs">
+              Rented Out
+            </span>
+          ) : (
+            <span className="bg-emerald-600/95 text-white text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg shadow-md backdrop-blur-xs flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+              <span>Available</span>
+            </span>
+          )}
+        </div>
+
+        {/* Price Tag Overlay with Micro-scale on Hover */}
+        <div className="absolute bottom-3.5 right-3.5 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg border border-slate-200/80 group-hover:scale-105 group-hover:border-[#102D50]/30 transition-all duration-300">
+          <p className="font-serif font-black text-xl text-[#102D50] leading-none group-hover:text-[#D71935] transition-colors duration-300">
+            {formattedPrice}
+          </p>
         </div>
       </div>
 
-      <div className="p-6">
-        <div className="text-sm text-[#C8A97E] font-medium tracking-wider uppercase mb-2">
-          {property.type}
-        </div>
-        <Link href={`/properties/${property.id}`}>
-          <h3 className="font-serif text-2xl text-primary mb-2 hover:text-[#C8A97E] transition-colors">
-            {property.name}
-          </h3>
-        </Link>
-        <div className="flex items-center text-gray-500 text-sm mb-4">
-          <MapPin size={16} className="mr-2" />
-          {property.location}
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-grow">
+        
+        {/* Location */}
+        <div className="flex items-center text-slate-500 text-sm font-medium mb-2.5 group/loc">
+          <MapPin size={15} className="text-[#D71935] mr-1.5 flex-shrink-0 group-hover/loc:scale-110 transition-transform" />
+          <span className="truncate">{property.location}</span>
+          {property.landmark && (
+            <span className="text-slate-400 ml-1.5 truncate">({property.landmark})</span>
+          )}
         </div>
 
-        <p className="text-gray-600 text-sm line-clamp-2 mb-6">
+        {/* Title */}
+        <Link href={detailUrl} className="block mb-3">
+          <h3 className="font-serif font-bold text-xl text-[#102D50] leading-snug line-clamp-2 group-hover:text-[#D71935] transition-colors duration-300">
+            {property.title}
+          </h3>
+        </Link>
+
+        {/* Description snippet with generous readable text-sm and leading-relaxed */}
+        <p className="text-slate-600 text-sm line-clamp-2 mb-5 leading-relaxed flex-grow">
           {property.description}
         </p>
 
-        <div className="grid grid-cols-3 gap-4 border-t border-gray-100 pt-4 mb-6">
-          <div className="flex flex-col items-center justify-center text-gray-500">
-            <Bed size={20} className="mb-1 text-[#C8A97E]" />
-            <span className="text-xs">{property.bedrooms} Beds</span>
-          </div>
-          <div className="flex flex-col items-center justify-center text-gray-500 border-x border-gray-100">
-            <Bath size={20} className="mb-1 text-[#C8A97E]" />
-            <span className="text-xs">{property.bathrooms} Baths</span>
-          </div>
-          <div className="flex flex-col items-center justify-center text-gray-500">
-            <Square size={20} className="mb-1 text-[#C8A97E]" />
-            <span className="text-xs">{property.area}</span>
+        {/* Key Specs Row with Larger Font Sizes */}
+        <div className="grid grid-cols-3 gap-2 py-3.5 border-t border-b border-slate-100 text-sm text-slate-800 mb-6 bg-slate-50/80 -mx-6 px-6 group-hover:bg-slate-100/60 transition-colors duration-300">
+          {property.bedrooms > 0 ? (
+            <div className="flex items-center gap-2 hover:text-[#102D50] transition-colors" title="Bedrooms">
+              <Bed size={17} className="text-[#102D50] flex-shrink-0" />
+              <span className="font-semibold">{property.bedrooms} BHK</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2" title="Category">
+              <span className="text-slate-500 capitalize">{property.category}</span>
+            </div>
+          )}
+
+          {property.bathrooms > 0 ? (
+            <div className="flex items-center gap-2 hover:text-[#102D50] transition-colors" title="Bathrooms">
+              <Bath size={17} className="text-[#102D50] flex-shrink-0" />
+              <span>{property.bathrooms} Baths</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="text-slate-500">Clear Title</span>
+            </div>
+          )}
+
+          <div className="flex items-center gap-2 hover:text-[#102D50] transition-colors" title="Carpet Area">
+            <Square size={16} className="text-[#102D50] flex-shrink-0" />
+            <span className="font-medium truncate">{formatArea(property.carpet_area)}</span>
           </div>
         </div>
 
-        <Link
-          href={`/properties/${property.id}`}
-          className="block w-full text-center border border-primary text-primary py-3 text-sm uppercase tracking-widest hover:bg-primary hover:text-background transition-colors"
-        >
-          View Property
-        </Link>
+        {/* Actions Footer */}
+        <div className="flex items-center gap-3 pt-1">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 py-3 px-4 border border-emerald-500/80 text-emerald-700 bg-emerald-50/50 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 hover:shadow-md hover:shadow-emerald-600/25 rounded-xl text-sm font-semibold active:scale-95 transition-all duration-300"
+            title="Inquire on WhatsApp"
+          >
+            <MessageCircle size={16} className="fill-current text-inherit" />
+            <span className="hidden sm:inline">WhatsApp</span>
+          </a>
+
+          <Link
+            href={detailUrl}
+            className="flex-grow flex items-center justify-center gap-2 bg-gradient-to-r from-[#102D50] to-[#1A4273] hover:from-[#1A4273] hover:to-[#102D50] text-white py-3 px-4 rounded-xl text-sm font-semibold shadow-sm hover:shadow-md hover:shadow-[#102D50]/20 active:scale-[0.98] transition-all duration-300 group/btn"
+          >
+            <span>View Details</span>
+            <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+          </Link>
+        </div>
+
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -1,204 +1,226 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import MagneticButton from "@/components/MagneticButton";
-import { ArrowRight } from "lucide-react";
+import { Building2, Key, TrendingUp, ShieldCheck, FileCheck, Phone, ArrowRight } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
-function StaggeredText({ text, className }: { text: string, className?: string }) {
-  const words = text.split(" ");
-  return (
-    <motion.div 
-      initial="hidden" 
-      whileInView="visible" 
-      viewport={{ once: true, margin: "-100px" }}
-      variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-      className={className}
-    >
-      {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.25em] pb-2">
-          <motion.span
-            variants={{
-              hidden: { y: "100%" },
-              visible: { y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-            }}
-            className="inline-block"
-          >
-            {word}
-          </motion.span>
-        </span>
-      ))}
-    </motion.div>
-  );
-}
-
-const detailedServices = [
-  {
-    id: "01",
-    title: "Buying Assistance",
-    description: "Find the right property with expert guidance from discovery to closing.",
-    problem: "Navigating the market can be overwhelming, with thousands of listings and hidden pitfalls.",
-    solution: "We act as your dedicated advisor, shortlisting properties that match your exact criteria and negotiating the best possible price on your behalf.",
-    benefits: ["Curated property options", "Expert negotiation", "Legal support", "Post-purchase assistance"],
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "02",
-    title: "Selling Assistance",
-    description: "Position your property effectively and connect with qualified buyers.",
-    problem: "Selling quickly at the right price requires market knowledge and strategic marketing.",
-    solution: "From staging advice and professional photography to targeted marketing and rigorous buyer screening, we handle it all.",
-    benefits: ["Accurate valuation", "Premium marketing", "Qualified buyer network", "Transaction management"],
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "03",
-    title: "Rental Assistance",
-    description: "Find reliable tenants and suitable rental properties with less hassle.",
-    problem: "Finding the right rental property or a trustworthy tenant is time-consuming and often risky.",
-    solution: "We streamline the process for landlords and tenants, handling viewings, background checks, and lease agreements with utmost professionalism.",
-    benefits: ["Extensive network", "Background checks", "Lease agreements", "Move-in support"],
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "04",
-    title: "Investment Advisory",
-    description: "Identify opportunities based on location, value and long-term potential.",
-    problem: "Real estate investment requires deep market analysis to ensure strong ROI.",
-    solution: "Our advisory service provides data-driven insights into emerging micro-markets, commercial yields, and residential appreciation trends.",
-    benefits: ["ROI analysis", "Micro-market reports", "Portfolio diversification", "Pre-launch access"],
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
-  }
-];
-
-function ServiceBlock({ service, index, setActive }: { service: any, index: number, setActive: (i: number) => void }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-50% 0px -50% 0px" });
-
-  useEffect(() => {
-    if (isInView) {
-      setActive(index);
-    }
-  }, [isInView, index, setActive]);
-
-  return (
-    <div ref={ref} className="min-h-[80vh] flex flex-col justify-center py-24 border-b border-gray-100 last:border-0 relative">
-      <div className="absolute top-24 right-0 text-9xl font-serif text-[#F9F8F6] -z-10 select-none">
-        {service.id}
-      </div>
-      
-      {/* Mobile Image (Hidden on Desktop) */}
-      <div className="lg:hidden w-full h-[40vh] relative mb-12 overflow-hidden">
-        <Image src={service.image} alt={service.title} fill className="object-cover" />
-      </div>
-
-      <span className="text-[#C8A97E] font-serif text-3xl mb-6 block">0{index + 1}</span>
-      <h2 className="font-serif text-5xl md:text-7xl text-primary mb-8">{service.title}</h2>
-      <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed mb-16 max-w-2xl">
-        {service.description}
-      </p>
-
-      <div className="space-y-12">
-        <div>
-          <h4 className="uppercase text-xs tracking-widest font-semibold text-primary mb-4 border-b border-gray-200 pb-2 inline-block">The Challenge</h4>
-          <p className="text-gray-500 font-light leading-relaxed text-lg max-w-xl">{service.problem}</p>
-        </div>
-        <div>
-          <h4 className="uppercase text-xs tracking-widest font-semibold text-primary mb-4 border-b border-gray-200 pb-2 inline-block">Our Approach</h4>
-          <p className="text-gray-500 font-light leading-relaxed text-lg max-w-xl">{service.solution}</p>
-        </div>
-        
-        <div>
-          <h4 className="uppercase text-xs tracking-widest font-semibold text-primary mb-6">Key Benefits</h4>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 max-w-2xl">
-            {service.benefits.map((benefit: string, i: number) => (
-              <li key={i} className="flex items-center text-gray-500 font-light">
-                <div className="w-1.5 h-1.5 bg-[#C8A97E] rounded-full mr-4" />
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      
-      <div className="mt-16">
-        <MagneticButton href="/contact" className="group flex items-center text-xs uppercase tracking-[0.2em] font-semibold text-primary">
-          <span className="mr-4 hover:text-[#C8A97E] transition-colors border-b border-primary pb-1 group-hover:border-[#C8A97E]">Enquire about {service.title}</span>
-          <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform text-[#C8A97E]" />
-        </MagneticButton>
-      </div>
-    </div>
-  );
-}
+export const metadata = {
+  title: "Real Estate Brokerage Services | Arth Properties Pune",
+  description: "Explore Arth Properties' comprehensive real estate services in Pune: Residential buying, property selling, corporate leasing, NA land investment, and title diligence by Monali Khedekar.",
+};
 
 export default function ServicesPage() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
   return (
-    <div className="bg-background min-h-screen text-primary selection:bg-[#C8A97E] selection:text-white pb-32">
+    <div className="pt-28 pb-24 bg-white min-h-screen">
       
-      {/* IMMERSIVE HERO */}
-      <section className="pt-48 pb-24 px-[5%] md:px-[10%]">
-        <div className="max-w-4xl">
-          <p className="text-[#C8A97E] uppercase tracking-[0.2em] text-sm font-semibold mb-6">Our Expertise</p>
-          <StaggeredText 
-            text="Comprehensive Real Estate Services." 
-            className="font-serif text-5xl md:text-8xl leading-[1.1] mb-8" 
-          />
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="text-gray-500 font-light text-xl md:text-2xl leading-relaxed max-w-2xl"
-          >
-            Tailored solutions designed to make your property journey seamless, transparent, and successful.
-          </motion.p>
+      {/* Header */}
+      <section className="bg-gradient-to-br from-[#0A1C33] via-[#102D50] to-[#0A1C33] text-white py-16 px-4 sm:px-6 lg:px-8 mb-16 border-b border-slate-800">
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D71935] bg-white/10 px-3 py-1 rounded-full inline-block mb-3">
+            What We Do
+          </span>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
+            Real Estate Services in Pune
+          </h1>
+          <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Professional brokerage, legal verification, and transaction support across Buy, Sell, and Rent verticals.
+          </p>
         </div>
       </section>
 
-      {/* EDITORIAL STICKY SCROLL SECTION */}
-      <section className="px-[5%] md:px-[10%] relative">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-          
-          {/* LEFT: Scrolling Content */}
-          <div className="w-full lg:w-1/2">
-            {detailedServices.map((service, index) => (
-              <ServiceBlock 
-                key={service.id} 
-                service={service} 
-                index={index} 
-                setActive={setActiveIndex} 
-              />
-            ))}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Service 1: Buying Assistance */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 pb-16 border-b border-slate-100">
+          <div>
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D71935] mb-2">
+              <Building2 size={16} />
+              <span>Service 01 &bull; Buyers</span>
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-[#102D50] mb-4">
+              Property Buying Assistance
+            </h2>
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              Finding the right home is more than browsing photos. We curate properties matching your exact life stage, budget, and commute preferences across Baner, Kharadi, Koregaon Park, Wakad, and Kothrud.
+            </p>
+            <ul className="space-y-2.5 text-xs text-slate-700 mb-8">
+              <li className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>Thorough verification of MahaRERA project status and clear title chain.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>Accompanied site visits with zero sales pressure.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>Hard price negotiations and builder contract scrutiny.</span>
+              </li>
+            </ul>
+            <Link
+              href="/properties"
+              className="group/btn inline-flex items-center gap-2 bg-[#102D50] hover:bg-[#1A4273] text-white px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow hover:shadow-lg hover:scale-105 active:scale-95"
+            >
+              <span>Browse Properties for Sale</span>
+              <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </Link>
           </div>
 
-          {/* RIGHT: Sticky Image (Desktop Only) */}
-          <div className="hidden lg:block w-1/2 relative">
-            <div className="sticky top-32 h-[75vh] w-full overflow-hidden">
-              {detailedServices.map((service, index) => (
-                <div
-                  key={`img-${service.id}`}
-                  className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-                  style={{ opacity: activeIndex === index ? 1 : 0, zIndex: activeIndex === index ? 10 : 0 }}
-                >
-                  <Image 
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover transition-transform duration-[10s] ease-out"
-                    style={{ transform: activeIndex === index ? 'scale(1.05)' : 'scale(1)' }}
-                  />
-                  <div className="absolute inset-0 bg-black/10" />
-                </div>
-              ))}
+          <div className="bg-slate-50/80 p-8 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg transition-all duration-300">
+            <h3 className="font-serif font-bold text-lg text-[#102D50] mb-3">
+              Included for Homebuyers:
+            </h3>
+            <div className="space-y-3 text-xs text-slate-600">
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Shortlist Analysis:</strong>
+                Comparative market analysis showing past 12-month registered transaction rates in the vicinity.
+              </div>
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Home Loan Liaison:</strong>
+                Assistance with leading banks (SBI, HDFC, ICICI) for fast title search and loan sanction.
+              </div>
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Sub-Registrar Registration:</strong>
+                Preparation of index II documents, stamp duty challans, and physical appointment escort.
+              </div>
             </div>
           </div>
-          
         </div>
-      </section>
 
+        {/* Service 2: Selling Assistance */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 pb-16 border-b border-slate-100">
+          <div className="order-2 lg:order-1 bg-slate-50/80 p-8 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg transition-all duration-300">
+            <h3 className="font-serif font-bold text-lg text-[#102D50] mb-3">
+              Why List with Arth Properties?
+            </h3>
+            <div className="space-y-3 text-xs text-slate-600">
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Pre-Qualified Buyers:</strong>
+                We only bring serious buyers with verified loan eligibility or self-funding to your home.
+              </div>
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Optimal Pricing Guidance:</strong>
+                Positioning that reflects real demand so your property sells smoothly without lingering for months.
+              </div>
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Total Paperwork Assistance:</strong>
+                Drafting Agreement to Sale, obtaining Society NOC, and handling TDS compliance.
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D71935] mb-2">
+              <Key size={16} />
+              <span>Service 02 &bull; Owners</span>
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-[#102D50] mb-4">
+              Property Selling & Strategic Marketing
+            </h2>
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              Selling an asset requires targeted positioning, dignified presentation, and rigorous buyer screening. Monali Khedekar manages the entire sales lifecycle from pricing to deed execution.
+            </p>
+            <Link
+              href="/sell"
+              className="group/btn inline-flex items-center gap-2 bg-gradient-to-r from-[#D71935] to-[#B8142C] hover:from-[#B8142C] hover:to-[#D71935] text-white px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow hover:shadow-lg hover:shadow-red-600/30 hover:scale-105 active:scale-95"
+            >
+              <span>Submit Property Details</span>
+              <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Service 3: Rental & Corporate Leasing */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 pb-16 border-b border-slate-100">
+          <div>
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D71935] mb-2">
+              <FileCheck size={16} />
+              <span>Service 03 &bull; Tenants & Landlords</span>
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-[#102D50] mb-4">
+              Rental & Lease Management
+            </h2>
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              We connect owners of high-grade apartments and commercial spaces with vetted corporate tenants, multinational executives, and responsible families across Pune.
+            </p>
+            <ul className="space-y-2.5 text-xs text-slate-700 mb-8">
+              <li className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>Tenant background checks and employer verification.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>Biometric e-registration of Leave & License agreements.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+                <span>Detailed move-in inventory documentation.</span>
+              </li>
+            </ul>
+            <Link
+              href="/properties?purpose=rent"
+              className="group/btn inline-flex items-center gap-2 bg-[#102D50] hover:bg-[#1A4273] text-white px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow hover:shadow-lg hover:scale-105 active:scale-95"
+            >
+              <span>View Rental Listings</span>
+              <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </Link>
+          </div>
+
+          <div className="bg-slate-50/80 p-8 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg transition-all duration-300">
+            <h3 className="font-serif font-bold text-lg text-[#102D50] mb-3">
+              Rental Concierge Services:
+            </h3>
+            <div className="space-y-3 text-xs text-slate-600">
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">NRI Property Management:</strong>
+                Remote leasing, rent collection monitoring, and regular unit inspection for overseas owners.
+              </div>
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Commercial Retail Leases:</strong>
+                High-street retail and office lease drafting with customized lock-in and escalation terms.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Service 4: Land & Investment Advisory */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="order-2 lg:order-1 bg-slate-50/80 p-8 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg transition-all duration-300">
+            <h3 className="font-serif font-bold text-lg text-[#102D50] mb-3">
+              Investment Parameters Checked:
+            </h3>
+            <div className="space-y-3 text-xs text-slate-600">
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Sanction Verification:</strong>
+                Zone classification, 7/12 extract inspection, mutation entry verification, and NA orders.
+              </div>
+              <div className="p-3.5 bg-white rounded-xl border border-slate-100 shadow-2xs hover:border-slate-200 transition-colors">
+                <strong className="text-slate-800 block mb-0.5">Rental Yield Modeling:</strong>
+                Evaluation of gross and net rental yields on pre-leased commercial assets.
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D71935] mb-2">
+              <TrendingUp size={16} />
+              <span>Service 04 &bull; Investors</span>
+            </div>
+            <h2 className="font-serif text-3xl font-bold text-[#102D50] mb-4">
+              Plots & Real Estate Investment Advisory
+            </h2>
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              Strategic capital allocation in Pune's high-growth corridors. We identify collector-approved NA villa plots, pre-leased commercial office units, and land parcels with strong appreciation tailwinds.
+            </p>
+            <Link
+              href="/properties?category=plots"
+              className="group/btn inline-flex items-center gap-2 bg-[#102D50] hover:bg-[#1A4273] text-white px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow hover:shadow-lg hover:scale-105 active:scale-95"
+            >
+              <span>Explore Investment Plots</span>
+              <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

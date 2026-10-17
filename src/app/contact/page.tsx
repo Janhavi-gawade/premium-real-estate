@@ -1,176 +1,175 @@
-"use client";
+import { Phone, Mail, MapPin, MessageSquare, Clock, ShieldCheck } from "lucide-react";
+import PropertyEnquiryForm from "@/components/forms/PropertyEnquiryForm";
+import { siteConfig } from "@/config/site";
 
-import { useState } from "react";
-import Image from "next/image";
-import { MapPin, Phone, Mail, MessageCircle, Clock } from "lucide-react";
+export const metadata = {
+  title: "Contact Us | Arth Properties Pune",
+  description: "Connect with Monali Khedekar at Arth Properties Pune. Call 9689965655 or 9767990606, WhatsApp us, or visit our Baner-Balewadi office for verified real estate guidance.",
+};
 
 export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert("Inquiry sent successfully. Our team will contact you shortly.");
-    }, 1500);
-  };
-
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+    <div className="pt-28 pb-24 bg-slate-50 min-h-screen">
+      
+      {/* Header */}
+      <section className="bg-gradient-to-br from-[#0A1C33] via-[#102D50] to-[#0A1C33] text-white py-16 px-4 sm:px-6 lg:px-8 mb-12 border-b border-slate-800">
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D71935] bg-white/10 px-3 py-1 rounded-full inline-block mb-3">
+            Get In Touch
+          </span>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
+            Contact Arth Properties
+          </h1>
+          <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Whether you are buying, selling, renting, or seeking investment advice in Pune, we are here to assist you with transparent advice.
+          </p>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           
-          {/* Left Column - Info */}
-          <div>
-            <p className="text-[#C8A97E] uppercase tracking-widest text-sm font-semibold mb-4">Contact Us</p>
-            <h1 className="font-serif text-4xl md:text-6xl text-primary mb-8 leading-tight">
-              Let's Find Your Next Property.
-            </h1>
-            <p className="text-gray-500 font-light text-lg mb-12 max-w-md">
-              Whether you are looking to buy, sell, rent, or invest, our team of experts is ready to assist you.
+          {/* Contact Details & Direct Call Cards */}
+          <div className="space-y-6">
+            
+            {/* Phone Card */}
+            <div className="group bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="p-3.5 bg-red-50 text-[#D71935] rounded-2xl flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                  <Phone size={24} />
+                </div>
+                <div className="flex-grow">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    Call Monali Khedekar
+                  </span>
+                  <h3 className="font-serif font-bold text-xl text-[#102D50] mb-2 group-hover:text-[#D71935] transition-colors">
+                    Direct Phone Assistance
+                  </h3>
+                  <div className="space-y-1.5 text-sm">
+                    <p>
+                      Primary:{" "}
+                      <a
+                        href={`tel:${siteConfig.contact.primaryPhone}`}
+                        className="font-bold text-[#102D50] hover:text-[#D71935] transition-colors"
+                      >
+                        {siteConfig.contact.primaryPhoneDisplay}
+                      </a>
+                    </p>
+                    <p>
+                      Alternate:{" "}
+                      <a
+                        href={`tel:${siteConfig.contact.alternatePhone}`}
+                        className="font-bold text-[#102D50] hover:text-[#D71935] transition-colors"
+                      >
+                        {siteConfig.contact.alternatePhoneDisplay}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* WhatsApp Card */}
+            <div className="group bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="p-3.5 bg-emerald-50 text-emerald-600 rounded-2xl flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                  <MessageSquare size={24} />
+                </div>
+                <div className="flex-grow">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    Instant Messaging
+                  </span>
+                  <h3 className="font-serif font-bold text-xl text-[#102D50] mb-2 group-hover:text-emerald-700 transition-colors">
+                    WhatsApp Consultation
+                  </h3>
+                  <p className="text-xs text-slate-500 mb-4 leading-relaxed">
+                    Send your requirement, budget, or property link directly to Monali Khedekar for quick responses.
+                  </p>
+                  <a
+                    href={siteConfig.contact.whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl transition-all duration-300 shadow hover:shadow-lg hover:shadow-emerald-600/30 hover:scale-105 active:scale-95"
+                  >
+                    <span>Open WhatsApp Chat</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Email Card */}
+            <div className="group bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="p-3.5 bg-blue-50 text-[#102D50] rounded-2xl flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                  <Mail size={24} />
+                </div>
+                <div className="flex-grow">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    Email Correspondence
+                  </span>
+                  <h3 className="font-serif font-bold text-xl text-[#102D50] mb-1 group-hover:text-[#D71935] transition-colors">
+                    Direct Inquiry
+                  </h3>
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="text-sm font-semibold text-[#102D50] hover:text-[#D71935] transition-colors"
+                  >
+                    {siteConfig.contact.email}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Office Address & Map Card */}
+            <div className="group bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-slate-300 hover:-translate-y-1.5 transition-all duration-300">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-3.5 bg-slate-100 text-slate-700 rounded-2xl flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                  <MapPin size={24} />
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    Location & Service Area
+                  </span>
+                  <h3 className="font-serif font-bold text-xl text-[#102D50] mb-1">
+                    Pune, Maharashtra
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {siteConfig.contact.address.display}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Operating across Baner, Kharadi, Koregaon Park, Wakad, Kothrud, Viman Nagar, and Balewadi.
+                  </p>
+                </div>
+              </div>
+
+              {/* Verified Location Notice */}
+              <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200 text-xs text-slate-500">
+                <div className="flex items-center gap-2 font-semibold text-slate-700 mb-1">
+                  <Clock size={14} className="text-[#102D50]" />
+                  <span>Consultation Hours</span>
+                </div>
+                <span>Monday &ndash; Saturday: 9:30 AM &ndash; 7:30 PM &bull; Sunday: By Prior Appointment for Site Visits</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: Interactive Consultation Form */}
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-2xl transition-all duration-500">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#D71935]">
+              Online Consultation Request
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#102D50] mt-1 mb-2">
+              Send an Enquiry
+            </h2>
+            <p className="text-xs text-slate-500 mb-8 leading-relaxed">
+              Fill out your requirements below and Monali Khedekar will contact you with vetted options matching your criteria.
             </p>
 
-            <div className="space-y-8 mb-12">
-              <div className="flex items-start">
-                <MapPin size={24} className="text-[#C8A97E] mr-6 flex-shrink-0" />
-                <div>
-                  <h4 className="font-serif text-xl text-primary mb-2">Office Address</h4>
-                  <p className="text-gray-500 font-light leading-relaxed">
-                    Level 4, Business Bay, <br />
-                    Koregaon Park, Pune, <br />
-                    Maharashtra 411001
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <Phone size={24} className="text-[#C8A97E] mr-6 flex-shrink-0" />
-                <div>
-                  <h4 className="font-serif text-xl text-primary mb-2">Contact Details</h4>
-                  <p className="text-gray-500 font-light mb-1">
-                    <a href="tel:+919876543210" className="hover:text-primary transition-colors">+91 98765 43210</a>
-                  </p>
-                  <p className="text-gray-500 font-light">
-                    <a href="mailto:contact@prestigerealestate.com" className="hover:text-primary transition-colors">contact@prestigerealestate.com</a>
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <Clock size={24} className="text-[#C8A97E] mr-6 flex-shrink-0" />
-                <div>
-                  <h4 className="font-serif text-xl text-primary mb-2">Working Hours</h4>
-                  <p className="text-gray-500 font-light">
-                    Mon - Sat: 9:30 AM - 7:00 PM <br />
-                    Sunday: By Appointment Only
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex space-x-4">
-              <a 
-                href="https://wa.me/919876543210" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-center bg-[#25D366] text-white px-6 py-3 uppercase text-xs tracking-widest font-semibold hover:bg-[#128C7E] transition-colors"
-              >
-                <MessageCircle size={16} className="mr-2" />
-                WhatsApp
-              </a>
-              <a 
-                href="tel:+919876543210" 
-                className="flex items-center justify-center border border-primary text-primary px-6 py-3 uppercase text-xs tracking-widest font-semibold hover:bg-primary hover:text-background transition-colors"
-              >
-                <Phone size={16} className="mr-2" />
-                Call Now
-              </a>
-            </div>
-          </div>
-
-          {/* Right Column - Form */}
-          <div className="bg-white p-8 md:p-12 border border-gray-100 shadow-xl">
-            <h3 className="font-serif text-3xl text-primary mb-8">Send an Inquiry</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Your Name *</label>
-                  <input type="text" required className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary" />
-                </div>
-                <div>
-                  <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Phone Number *</label>
-                  <input type="tel" required className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary" />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Email Address</label>
-                <input type="email" className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary" />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Interested In</label>
-                  <select className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary">
-                    <option value="buy">Buying</option>
-                    <option value="sell">Selling</option>
-                    <option value="rent">Renting</option>
-                    <option value="invest">Investing</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Budget Range</label>
-                  <select className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary">
-                    <option value="under-1">Under ₹1 Cr</option>
-                    <option value="1-3">₹1 Cr - ₹3 Cr</option>
-                    <option value="3-5">₹3 Cr - ₹5 Cr</option>
-                    <option value="above-5">Above ₹5 Cr</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Preferred Location</label>
-                <input type="text" placeholder="e.g. Koregaon Park, Baner" className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary" />
-              </div>
-
-              <div>
-                <label className="text-xs uppercase tracking-widest text-gray-400 mb-2 block">Your Message</label>
-                <textarea rows={4} className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-[#C8A97E] bg-transparent text-primary resize-none"></textarea>
-              </div>
-
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="w-full bg-primary text-background py-5 uppercase text-sm tracking-widest font-semibold hover:bg-[#C8A97E] transition-colors mt-8 disabled:opacity-70"
-              >
-                {isSubmitting ? "Sending..." : "Send Inquiry"}
-              </button>
-            </form>
+            <PropertyEnquiryForm />
           </div>
 
         </div>
-
-        {/* Map Placeholder */}
-        <div className="mt-24 h-[400px] w-full bg-gray-100 border border-gray-200 relative flex items-center justify-center">
-          <div className="absolute inset-0 z-0">
-             <Image 
-                src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=2000&q=80"
-                alt="Map Location"
-                fill
-                className="object-cover opacity-50 grayscale"
-              />
-          </div>
-          <div className="relative z-10 bg-white p-6 shadow-xl text-center flex flex-col items-center">
-            <MapPin size={32} className="text-[#C8A97E] mb-2" />
-            <h4 className="font-serif text-xl text-primary">Prestige Real Estate</h4>
-            <a href="#" className="text-sm text-[#C8A97E] uppercase tracking-widest mt-2 hover:text-primary transition-colors">Get Directions</a>
-          </div>
-        </div>
-
       </div>
     </div>
   );

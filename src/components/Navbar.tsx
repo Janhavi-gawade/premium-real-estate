@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Phone, MessageSquare, ArrowUpRight } from "lucide-react";
 import { usePathname } from "next/navigation";
-import MagneticButton from "@/components/MagneticButton";
+import BrandLogo from "@/components/brand/BrandLogo";
+import { siteConfig } from "@/config/site";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,120 +14,202 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 30);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Properties", href: "/properties" },
-    { name: "Services", href: "/services" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
-  ];
-
-  const menuVariants: any = {
-    closed: { opacity: 0, y: "-100%", transition: { duration: 0.8, ease: "easeOut" } },
-    open: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-  };
-
-  const linkVariants: any = {
-    closed: { opacity: 0, y: 50 },
-    open: (i: number) => ({
-      opacity: 1, 
-      y: 0,
-      transition: { delay: 0.4 + (i * 0.1), duration: 0.8, ease: "easeOut" }
-    })
-  };
+  const isHeroLightPage = pathname === "/";
+  const useTransparentDarkStyle = isHeroLightPage && !isScrolled && !isMenuOpen;
 
   return (
     <>
       <nav
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          isMenuOpen 
-            ? "bg-transparent py-8 text-background" 
-            : isScrolled 
-              ? "bg-background/95 backdrop-blur-md py-4 border-b border-gray-200 text-primary shadow-sm" 
-              : pathname === "/" 
-                ? "bg-transparent py-8 text-white" 
-                : "bg-transparent py-8 text-primary"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
+          useTransparentDarkStyle
+            ? "bg-transparent py-5 text-white"
+            : "bg-white/95 backdrop-blur-md py-3.5 border-b border-slate-200/90 text-[#102D50] shadow-sm"
         }`}
       >
-        <div className="max-w-[90%] mx-auto flex justify-between items-center">
-          <Link href="/" className="text-3xl font-serif tracking-tight z-50">
-            PRESTIGE<span className="text-[#C8A97E]">.</span>
-          </Link>
-
-          <div className="flex items-center space-x-12">
-            <MagneticButton
-              href="/contact"
-              className="hidden md:block uppercase text-xs tracking-[0.2em] font-semibold hover:text-[#C8A97E] transition-colors z-50 p-4"
-            >
-              Let's Talk
-            </MagneticButton>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
             
-            <MagneticButton
-              className="z-50 uppercase text-xs tracking-[0.2em] font-semibold hover:text-[#C8A97E] transition-colors flex items-center gap-3 p-4"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span className="hidden md:block">{isMenuOpen ? 'CLOSE' : 'MENU'}</span>
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </MagneticButton>
+            {/* Logo */}
+            <BrandLogo
+              variant={useTransparentDarkStyle ? "light" : "dark"}
+              showTagline={false}
+              size="md"
+            />
+
+            {/* Desktop Navigation Links with Animated Sliding Underline Hover Effect */}
+            <div className="hidden lg:flex items-center gap-8">
+              {siteConfig.navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`group relative text-sm font-medium tracking-wide py-1.5 transition-colors duration-300 ${
+                      isActive
+                        ? "text-[#D71935] font-semibold"
+                        : useTransparentDarkStyle
+                        ? "text-slate-200 hover:text-white"
+                        : "text-slate-700 hover:text-[#102D50]"
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    
+                    {/* Animated Sliding Underline on Hover */}
+                    <span 
+                      className={`absolute bottom-0 left-0 h-0.5 rounded-full transition-all duration-300 ease-out ${
+                        isActive
+                          ? "w-full bg-[#D71935]"
+                          : "w-0 bg-[#D71935] group-hover:w-full"
+                      }`} 
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Desktop Quick Actions */}
+            <div className="hidden md:flex items-center gap-3">
+              
+              {/* Call Link */}
+              <a
+                href={`tel:${siteConfig.contact.primaryPhone}`}
+                className={`flex items-center gap-2 text-xs font-semibold px-3.5 py-2 rounded-xl border transition-all duration-300 hover:scale-105 active:scale-95 ${
+                  useTransparentDarkStyle
+                    ? "border-white/30 text-white hover:bg-white/10 hover:border-white"
+                    : "border-slate-300 text-[#102D50] hover:bg-slate-50 hover:border-[#102D50]/40"
+                }`}
+                title="Call Monali Khedekar"
+              >
+                <Phone size={14} className="text-[#D71935]" />
+                <span>{siteConfig.contact.primaryPhoneDisplay}</span>
+              </a>
+
+              {/* Sell Property CTA Button with Gradient & Scale on Hover */}
+              <Link
+                href="/sell"
+                className="group bg-gradient-to-r from-[#D71935] to-[#B8142C] hover:from-[#B8142C] hover:to-[#D71935] text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-red-600/30 hover:scale-105 active:scale-95 flex items-center gap-1.5"
+              >
+                <span>Sell Property</span>
+                <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+
+              {/* Admin Dashboard Link */}
+              <Link
+                href="/admin"
+                className={`text-[11px] font-semibold tracking-wider uppercase px-2 py-1.5 rounded-lg transition-all duration-300 hover:scale-105 ${
+                  useTransparentDarkStyle
+                    ? "text-white/60 hover:text-white hover:bg-white/10"
+                    : "text-slate-400 hover:text-[#102D50] hover:bg-slate-100"
+                }`}
+                title="Admin Dashboard"
+              >
+                Admin
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <a
+                href={`tel:${siteConfig.contact.primaryPhone}`}
+                className="p-2 rounded-xl bg-[#D71935] text-white shadow-sm hover:scale-105 active:scale-95 transition-transform"
+                aria-label="Call Arth Properties"
+              >
+                <Phone size={18} />
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className={`p-2 rounded-xl transition-all ${
+                  useTransparentDarkStyle
+                    ? "text-white hover:bg-white/10"
+                    : "text-slate-700 hover:bg-slate-100"
+                }`}
+                aria-label="Toggle Navigation Menu"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+
           </div>
         </div>
-      </nav>
 
-      {/* Full Screen Menu */}
-      <AnimatePresence>
+        {/* Mobile Navigation Drawer */}
         {isMenuOpen && (
-          <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className="fixed inset-0 bg-primary z-40 flex flex-col justify-center px-[5%] md:px-[10%]"
-          >
-            <div className="flex flex-col md:flex-row justify-between w-full mt-24 items-center md:items-start">
-              <div className="flex flex-col space-y-6 md:space-y-8 w-full md:w-1/2">
-                {navLinks.map((link, i) => (
-                  <div key={link.name} className="overflow-hidden">
-                    <motion.div custom={i} variants={linkVariants} initial="closed" animate="open" exit="closed">
-                      <Link
-                        href={link.href}
-                        className={`font-serif text-4xl md:text-6xl hover:text-[#C8A97E] transition-colors inline-block ${pathname === link.href ? 'text-[#C8A97E]' : 'text-background'}`}
-                      >
-                        {link.name}
-                      </Link>
-                    </motion.div>
-                  </div>
+          <div className="lg:hidden bg-white border-b border-slate-200 text-[#102D50] px-6 py-6 shadow-2xl animate-in fade-in duration-200">
+            <div className="flex flex-col gap-4">
+              <div className="pb-3 border-b border-slate-100">
+                <BrandLogo variant="dark" showTagline={true} size="sm" />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {siteConfig.navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`py-2 text-base font-medium transition-colors ${
+                      pathname === link.href
+                        ? "text-[#D71935] font-semibold"
+                        : "text-slate-700 hover:text-[#102D50]"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
                 ))}
               </div>
-              
-              <div className="mt-16 md:mt-0 flex flex-col justify-end text-background/60 w-full md:w-1/3">
-                <motion.div variants={linkVariants} custom={5} initial="closed" animate="open" exit="closed">
-                  <h4 className="text-xs uppercase tracking-widest text-[#C8A97E] mb-4">Contact Info</h4>
-                  <p className="mb-2 hover:text-white transition-colors"><a href="mailto:contact@prestige.com">contact@prestige.com</a></p>
-                  <p className="mb-8 hover:text-white transition-colors"><a href="tel:+919876543210">+91 98765 43210</a></p>
-                  
-                  <h4 className="text-xs uppercase tracking-widest text-[#C8A97E] mb-4">Socials</h4>
-                  <div className="flex space-x-6">
-                    <a href="#" className="hover:text-white transition-colors">Instagram</a>
-                    <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-                    <a href="#" className="hover:text-white transition-colors">Facebook</a>
-                  </div>
-                </motion.div>
+
+              <div className="pt-4 border-t border-slate-200 flex flex-col gap-3">
+                <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                  Direct Broker Assistance:
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  <a
+                    href={`tel:${siteConfig.contact.primaryPhone}`}
+                    className="flex items-center justify-center gap-2 bg-[#102D50] text-white py-2.5 px-3 rounded-xl text-xs font-semibold shadow-xs"
+                  >
+                    <Phone size={14} />
+                    <span>{siteConfig.contact.primaryPhone}</span>
+                  </a>
+                  <a
+                    href={`tel:${siteConfig.contact.alternatePhone}`}
+                    className="flex items-center justify-center gap-2 border border-slate-300 text-[#102D50] py-2.5 px-3 rounded-xl text-xs font-semibold"
+                  >
+                    <Phone size={14} />
+                    <span>{siteConfig.contact.alternatePhone}</span>
+                  </a>
+                </div>
+
+                <a
+                  href={siteConfig.contact.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl text-sm font-semibold shadow-md active:scale-95 transition-transform"
+                >
+                  <MessageSquare size={16} />
+                  <span>WhatsApp Monali Khedekar</span>
+                </a>
+
+                <Link
+                  href="/admin"
+                  className="text-center text-xs text-slate-500 hover:text-[#102D50] pt-1"
+                >
+                  Admin Portal Login
+                </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </nav>
     </>
   );
 }

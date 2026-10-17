@@ -1,131 +1,162 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { Quote } from "lucide-react";
-import { testimonials } from "@/data/mockData";
-import { motion } from "framer-motion";
-import MagneticButton from "@/components/MagneticButton";
+import { ShieldCheck, HeartHandshake, Compass, Building2, Phone, CheckCircle2, ArrowRight } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
-function StaggeredText({ text, className }: { text: string, className?: string }) {
-  const words = text.split(" ");
-  return (
-    <motion.div 
-      initial="hidden" 
-      whileInView="visible" 
-      viewport={{ once: true, margin: "-100px" }}
-      variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-      className={className}
-    >
-      {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.25em] pb-2">
-          <motion.span
-            variants={{
-              hidden: { y: "100%" },
-              visible: { y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-            }}
-            className="inline-block"
-          >
-            {word}
-          </motion.span>
-        </span>
-      ))}
-    </motion.div>
-  );
-}
+export const metadata = {
+  title: "About Us | Monali Khedekar & Arth Properties",
+  description: "Learn about Arth Properties, Pune's trusted boutique real estate advisory led by Monali Khedekar. Dedicated to transparency, verified documentation, and personalized property solutions.",
+};
 
 export default function AboutPage() {
   return (
-    <div className="pt-48 pb-24 min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        {/* Header */}
-        <div className="text-center mb-32 max-w-4xl mx-auto">
-          <p className="text-[#C8A97E] uppercase tracking-[0.2em] text-sm font-semibold mb-8">About Us</p>
-          <StaggeredText 
-            text="Experience That Helps You Make Better Property Decisions." 
-            className="font-serif text-5xl md:text-7xl text-primary leading-tight" 
-          />
+    <div className="pt-28 pb-24 bg-white min-h-screen">
+      
+      {/* Header Banner */}
+      <section className="bg-[#102D50] text-white py-16 px-4 sm:px-6 lg:px-8 mb-16 border-b border-slate-800">
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D71935] bg-white/10 px-3 py-1 rounded-full inline-block mb-3">
+            Boutique Real Estate Advisory
+          </span>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            About Arth Properties
+          </h1>
+          <p className="text-slate-300 text-base max-w-2xl mx-auto leading-relaxed">
+            &ldquo;{siteConfig.tagline}&rdquo; &bull; &ldquo;{siteConfig.secondaryTagline}&rdquo;
+          </p>
         </div>
+      </section>
 
-        {/* Broker Profile */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
-          <div className="relative h-[600px] w-full">
-            <Image 
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80"
-              alt="Professional Broker"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Founder & Mission Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
+          <div className="relative h-[480px] sm:h-[560px] rounded-2xl overflow-hidden shadow-xl border border-slate-200">
+            <Image
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80"
+              alt="Monali Khedekar - Real Estate Professional at Arth Properties Pune"
               fill
               className="object-cover"
+              priority
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#102D50]/90 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 text-white">
+              <span className="text-xs uppercase tracking-widest text-[#D71935] font-bold block mb-1">
+                Founder & Principal Consultant
+              </span>
+              <h3 className="font-serif text-2xl font-bold">
+                {siteConfig.founder.name}
+              </h3>
+              <p className="text-xs text-slate-300">
+                {siteConfig.founder.location}
+              </p>
+            </div>
           </div>
+
           <div>
-            <h2 className="font-serif text-4xl text-primary mb-6">Arjun Kapoor</h2>
-            <p className="uppercase text-sm tracking-widest text-[#C8A97E] font-semibold mb-8">Principal Advisor</p>
-            
-            <div className="space-y-6 text-gray-600 font-light text-lg leading-relaxed mb-10">
-              <p>
-                With over a decade of experience in the luxury real estate market, Arjun has built a reputation for providing honest, data-driven, and personalized property advice.
-              </p>
-              <p>
-                His approach goes beyond simply showing properties; it's about understanding the unique lifestyle requirements and investment goals of each client to find the perfect match.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-8 border-t border-gray-100 pt-8 mb-10">
-              <div>
-                <p className="font-serif text-4xl text-primary mb-1">12+</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500">Years Experience</p>
-              </div>
-              <div>
-                <p className="font-serif text-4xl text-primary mb-1">₹500Cr+</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500">Sales Volume</p>
-              </div>
-            </div>
-            
-            <MagneticButton href="/contact" className="inline-block bg-primary text-background px-8 py-4 uppercase text-xs tracking-[0.2em] hover:bg-[#C8A97E] transition-colors">
-              Schedule a Meeting
-            </MagneticButton>
-          </div>
-        </div>
+            <span className="text-xs font-bold uppercase tracking-widest text-[#D71935]">
+              Our Philosophy
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#102D50] mt-2 mb-6 leading-tight">
+              A Personalised, High-Trust Approach to Pune Real Estate
+            </h2>
 
-        {/* Approach */}
-        <div className="bg-white p-12 md:p-24 border border-gray-100 mb-32 text-center">
-          <h2 className="font-serif text-3xl md:text-4xl text-primary mb-12">Our Core Principles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div>
-              <h3 className="font-serif text-xl text-primary mb-4">Curated Selection</h3>
-              <p className="text-gray-500 font-light">We only present properties that meet our strict criteria for quality, location, and value potential.</p>
+            <div className="space-y-4 text-slate-600 text-sm leading-relaxed mb-8">
+              <p>
+                Founded by <strong>{siteConfig.founder.name}</strong>, Arth Properties was established with a singular conviction: real estate advisory should be grounded in unassailable integrity, verifiable documentation, and true alignment with the client's aspirations.
+              </p>
+              <p>
+                In a market often characterized by aggressive sales pitches and unclear title histories, Arth Properties acts as your dedicated advocate. Whether you are shortlisting your first 2 BHK in Wakad, acquiring an ultra-luxury penthouse in Koregaon Park, establishing a commercial office in Viman Nagar, or investing in sanctioned NA plots in Bavdhan, we provide clear guidance at every milestone.
+              </p>
+              <p>
+                Our name, <em>&ldquo;Arth&rdquo;</em> (meaning value, purpose, and significance), embodies our foundational promise: to uncover and safeguard the true value behind every home for our clients.
+              </p>
             </div>
-            <div>
-              <h3 className="font-serif text-xl text-primary mb-4">Transparent Process</h3>
-              <p className="text-gray-500 font-light">Clear communication and honest advice at every step of the transaction, with no hidden surprises.</p>
-            </div>
-            <div>
-              <h3 className="font-serif text-xl text-primary mb-4">Long-term Vision</h3>
-              <p className="text-gray-500 font-light">We focus on building lasting relationships and helping clients build wealth through smart real estate decisions.</p>
+
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span className="font-serif text-2xl font-bold text-[#102D50] block">Buy, Sell, Rent</span>
+                <span className="text-xs text-slate-500">Comprehensive transaction services</span>
+              </div>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span className="font-serif text-2xl font-bold text-[#D71935] block">Pune Centric</span>
+                <span className="text-xs text-slate-500">Deep localized micro-market expertise</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div>
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-primary mb-4">Client Experiences</h2>
-            <p className="text-gray-500">Don't just take our word for it.</p>
+        {/* Core Pillars */}
+        <div className="mb-24">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#D71935]">
+              Guiding Principles
+            </span>
+            <h3 className="font-serif text-3xl font-bold text-[#102D50] mt-1">
+              How We Protect Your Interests
+            </h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-white p-8 border border-gray-100 relative pt-12">
-                <Quote className="absolute top-6 left-8 text-[#C8A97E]/20 w-12 h-12" />
-                <p className="text-gray-600 font-light italic mb-8 relative z-10 leading-relaxed">
-                  "{testimonial.text}"
-                </p>
-                <p className="uppercase text-xs tracking-widest font-semibold text-primary">
-                  — {testimonial.author}
-                </p>
+            <div className="group bg-slate-50 hover:bg-white p-8 rounded-2xl border border-slate-200 hover:border-[#102D50]/40 shadow-xs hover:shadow-xl hover:-translate-y-2 transition-all duration-400 ease-out">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 text-[#102D50] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <ShieldCheck size={24} />
               </div>
-            ))}
+              <h4 className="font-serif font-bold text-xl text-[#102D50] mb-2 group-hover:text-[#D71935] transition-colors">
+                Uncompromising Due Diligence
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                We never promote properties with pending litigation, ambiguous inheritance, or unapproved layouts. Every listing undergoes scrutiny of title clearance and MahaRERA filings.
+              </p>
+            </div>
+
+            <div className="group bg-slate-50 hover:bg-white p-8 rounded-2xl border border-slate-200 hover:border-[#D71935]/40 shadow-xs hover:shadow-xl hover:-translate-y-2 transition-all duration-400 ease-out">
+              <div className="w-12 h-12 rounded-xl bg-red-100 text-[#D71935] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <HeartHandshake size={24} />
+              </div>
+              <h4 className="font-serif font-bold text-xl text-[#102D50] mb-2 group-hover:text-[#D71935] transition-colors">
+                Fair & Open Negotiations
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                We foster transparent dialogue between sellers and buyers. You will always know genuine base rates, society charges, and legal expenses without hidden developer margins.
+              </p>
+            </div>
+
+            <div className="group bg-slate-50 hover:bg-white p-8 rounded-2xl border border-slate-200 hover:border-[#102D50]/40 shadow-xs hover:shadow-xl hover:-translate-y-2 transition-all duration-400 ease-out">
+              <div className="w-12 h-12 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <Compass size={24} />
+              </div>
+              <h4 className="font-serif font-bold text-xl text-[#102D50] mb-2 group-hover:text-[#D71935] transition-colors">
+                Long-Term Relationship
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Our commitment does not terminate with contract signing. We assist through stamp duty payment, registration escort, utility transfer, and tenant leasing services.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Regulatory Disclosure Notice */}
+        <div className="bg-slate-900 text-white p-8 rounded-2xl border border-slate-800 mb-16 shadow-xl">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div>
+              <span className="text-xs uppercase font-bold tracking-widest text-[#D71935] block mb-1">
+                Maharashtra Real Estate Regulatory Authority (MahaRERA)
+              </span>
+              <h4 className="font-serif text-xl font-bold mb-2">
+                Regulatory Standards & Compliance
+              </h4>
+              <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+                Arth Properties strictly adheres to the Real Estate (Regulation and Development) Act, 2016. Agent registration and individual project registration details are verified with clients prior to executing formal brokerage transactions.
+              </p>
+            </div>
+
+            <Link
+              href="/contact"
+              className="bg-gradient-to-r from-[#D71935] to-[#B8142C] hover:from-[#B8142C] hover:to-[#D71935] text-white px-7 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-red-600/30 hover:scale-105 active:scale-95 flex-shrink-0"
+            >
+              Get In Touch
+            </Link>
           </div>
         </div>
 
