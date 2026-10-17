@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, Mail, MapPin, ShieldCheck, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, ShieldCheck, ArrowRight, ExternalLink } from "lucide-react";
 import BrandLogo from "@/components/brand/BrandLogo";
 import { siteConfig } from "@/config/site";
 
@@ -110,9 +110,18 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin size={15} className="mt-0.5 text-[#D71935] flex-shrink-0" />
-                <span className="leading-relaxed">
-                  {siteConfig.contact.address.display}
-                </span>
+                <div className="leading-relaxed">
+                  <span>{siteConfig.contact.address.display}</span>
+                  <a
+                    href={siteConfig.googleBusinessUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1.5 text-[11px] text-[#D71935] hover:text-white transition-colors font-semibold"
+                  >
+                    <span>View on Google Maps / Business Profile</span>
+                    <ExternalLink size={11} />
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

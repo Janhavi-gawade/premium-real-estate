@@ -66,22 +66,40 @@ export default function AboutPage() {
                 Founded by <strong>{siteConfig.founder.name}</strong>, Arth Properties was established with a singular conviction: real estate advisory should be grounded in unassailable integrity, verifiable documentation, and true alignment with the client's aspirations.
               </p>
               <p>
-                In a market often characterized by aggressive sales pitches and unclear title histories, Arth Properties acts as your dedicated advocate. Whether you are shortlisting your first 2 BHK in Wakad, acquiring an ultra-luxury penthouse in Koregaon Park, establishing a commercial office in Viman Nagar, or investing in sanctioned NA plots in Bavdhan, we provide clear guidance at every milestone.
+                Headquartered in <strong>Hadapsar (Near Siddhi Driving School, Gadital)</strong>, Arth Properties has established deep roots in East Pune's thriving corridors — including <strong>Hadapsar, Magarpatta City, Amanora Park Town, Shewalwadi, Saswad Road, Fursungi, and Kharadi</strong> — while actively serving buyers and investors across Koregaon Park, Kalyani Nagar, Viman Nagar, Baner, and Wakad.
               </p>
               <p>
-                Our name, <em>&ldquo;Arth&rdquo;</em> (meaning value, purpose, and significance), embodies our foundational promise: to uncover and safeguard the true value behind every home for our clients.
+                Whether you are shortlisting your first 2 BHK in Hadapsar or Wakad, acquiring an ultra-luxury penthouse in Koregaon Park, securing a Grade-A commercial office in Magarpatta Cybercity, or investing in sanctioned NA villa plots along Saswad Road or Bavdhan, we act as your dedicated advocate with zero pressure and complete transparency.
+              </p>
+              <p>
+                Our name, <em>&ldquo;Arth&rdquo;</em> (meaning value, purpose, and significance in Marathi and Sanskrit), embodies our foundational promise: to uncover and safeguard the true value behind every home for our clients.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 mb-6">
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="font-serif text-2xl font-bold text-[#102D50] block">Buy, Sell, Rent</span>
-                <span className="text-xs text-slate-500">Comprehensive transaction services</span>
+                <span className="text-xs text-slate-500">End-to-end transaction services</span>
               </div>
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <span className="font-serif text-2xl font-bold text-[#D71935] block">Pune Centric</span>
-                <span className="text-xs text-slate-500">Deep localized micro-market expertise</span>
+                <span className="font-serif text-2xl font-bold text-[#D71935] block">Hadapsar & Pune</span>
+                <span className="text-xs text-slate-500">Specialized micro-market depth</span>
               </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4 text-xs">
+              <a
+                href={siteConfig.googleBusinessUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#102D50] hover:bg-[#1A4273] text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow hover:scale-105 active:scale-95"
+              >
+                <ShieldCheck size={16} className="text-emerald-400" />
+                <span>Verified Google Business Profile</span>
+              </a>
+              <span className="text-slate-500">
+                Office: Near Siddhi Driving School, Gadital, Hadapsar, Pune 411028
+              </span>
             </div>
           </div>
         </div>

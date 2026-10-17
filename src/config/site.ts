@@ -10,9 +10,12 @@ export const siteConfig = {
   founder: {
     name: "Monali Khedekar",
     role: "Founder & Principal Real Estate Consultant",
-    bio: "With deep-rooted expertise across Pune's prime residential and commercial micro-markets, Monali Khedekar guides homebuyers, investors, and landowners with verified listings, transparent negotiations, and end-to-end transaction assistance.",
-    location: "Pune, Maharashtra, India",
+    bio: "With deep-rooted expertise across Hadapsar, Magarpatta City, Amanora, Kharadi, Koregaon Park, and prime Pune micro-markets, Monali Khedekar guides homebuyers, investors, and landowners with verified listings, transparent negotiations, and end-to-end legal and registration assistance.",
+    location: "Hadapsar, Pune, Maharashtra, India",
   },
+
+  // Google Business Profile & Verification
+  googleBusinessUrl: "https://share.google/RWjt938xzzIlxP3D3",
 
   // Contact Information
   contact: {
@@ -22,13 +25,14 @@ export const siteConfig = {
     alternatePhoneDisplay: "+91 97679 90606",
     email: "arthproperties@gmail.com",
     address: {
-      line1: "Prime Business Hub, Baner - Balewadi Road",
-      locality: "Baner",
+      line1: "Near Siddhi Driving School, Unnatinagar, Gadital",
+      locality: "Hadapsar",
       city: "Pune",
       state: "Maharashtra",
-      pincode: "411045",
+      pincode: "411028",
       country: "India",
-      display: "Baner - Balewadi Road, Pune, Maharashtra 411045",
+      display: "Near Siddhi Driving School, Unnatinagar, Gadital, Hadapsar, Pune, Maharashtra 411028",
+      landmark: "Near Siddhi Driving School & Gadital Chowk",
     },
     whatsappNumber: "919689965655",
     whatsappLink: "https://wa.me/919689965655",
@@ -56,40 +60,59 @@ export const siteConfig = {
   services: [
     {
       id: "buy",
-      title: "Buy Properties",
-      description: "Exclusive curated residential apartments, luxury villas, and vetted commercial spaces with complete title diligence.",
+      title: "Buy Properties & Resale",
+      description: "Curated 1, 2, 3, and 4 BHK residential apartments, penthouses, row houses, and luxury villas with 100% verified titles.",
     },
     {
       id: "sell",
-      title: "Sell Properties",
-      description: "Strategic pricing, high-intent buyer matching, professional staging advice, and seamless documentation for owners.",
+      title: "Sell Your Property",
+      description: "Direct owner representation, accurate market valuation, pre-qualified buyer matching, and complete transaction closing.",
     },
     {
       id: "rent",
       title: "Rental & Lease Management",
-      description: "Hassle-free corporate and family leasing, verified tenant background checks, and registered rent agreement assistance.",
+      description: "Hassle-free corporate and family leasing, verified tenant background checks, and registered Leave & License agreement assistance.",
     },
     {
-      id: "investment",
-      title: "Investment & Land Advisory",
-      description: "High-yield commercial spaces, NA plots, and pre-launch growth corridor investments backed by micro-market intelligence.",
+      id: "commercial",
+      title: "Commercial Offices & Retail",
+      description: "Prime IT office spaces, high-street retail shops, and pre-leased commercial assets delivering strong rental yields.",
+    },
+    {
+      id: "plots",
+      title: "NA Plots & Land Deals",
+      description: "Collector-sanctioned NA residential and commercial plots, farmhouse land, and growth corridor parcels with clear 7/12 extracts.",
+    },
+    {
+      id: "legal",
+      title: "Legal & Loan Assistance",
+      description: "Title search report liaison, Sub-Registrar deed registration, stamp duty consultation, and bank loan approvals with leading lenders.",
     },
   ],
 
-  // Prime Pune localities served
+  // Prime Pune localities served (centered on Hadapsar & surrounding corridors + prime Pune)
   primeLocations: [
-    "Baner",
+    "Hadapsar",
+    "Magarpatta City",
+    "Amanora Park Town",
+    "Shewalwadi",
+    "Saswad Road",
+    "Fursungi",
+    "Manjri",
+    "Handewadi",
+    "Mundhwa",
+    "Keshav Nagar",
     "Kharadi",
     "Koregaon Park",
+    "Kalyani Nagar",
+    "Viman Nagar",
+    "Wanowrie",
+    "NIBM Road",
+    "Baner",
     "Balewadi",
     "Wakad",
     "Kothrud",
-    "Viman Nagar",
-    "Hinjewadi",
-    "Bavdhan",
-    "Aundh",
-    "NIBM Road",
-    "Kalyani Nagar"
+    "Bavdhan"
   ],
 
   // Navigation Links

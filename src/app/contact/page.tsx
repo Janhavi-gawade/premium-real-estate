@@ -1,10 +1,10 @@
-import { Phone, Mail, MapPin, MessageSquare, Clock, ShieldCheck } from "lucide-react";
+import { Phone, Mail, MapPin, MessageSquare, Clock, ShieldCheck, ExternalLink } from "lucide-react";
 import PropertyEnquiryForm from "@/components/forms/PropertyEnquiryForm";
 import { siteConfig } from "@/config/site";
 
 export const metadata = {
   title: "Contact Us | Arth Properties Pune",
-  description: "Connect with Monali Khedekar at Arth Properties Pune. Call 9689965655 or 9767990606, WhatsApp us, or visit our Baner-Balewadi office for verified real estate guidance.",
+  description: "Connect with Monali Khedekar at Arth Properties Pune. Call 9689965655 or 9767990606, WhatsApp us, or visit our office near Siddhi Driving School, Gadital, Hadapsar, Pune for verified real estate guidance.",
 };
 
 export default function ContactPage() {
@@ -128,22 +128,42 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                    Location & Service Area
+                    Registered Office & Consultation Hub
                   </span>
                   <h3 className="font-serif font-bold text-xl text-[#102D50] mb-1">
-                    Pune, Maharashtra
+                    Hadapsar, Pune
                   </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
                     {siteConfig.contact.address.display}
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    Operating across Baner, Kharadi, Koregaon Park, Wakad, Kothrud, Viman Nagar, and Balewadi.
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    Landmark: {siteConfig.contact.address.landmark}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-2">
+                    <strong>Service Focus:</strong> Hadapsar, Magarpatta City, Amanora Park Town, Shewalwadi, Saswad Road, Fursungi, Manjri, Handewadi, Keshav Nagar / Mundhwa, Kharadi, Koregaon Park, Kalyani Nagar, Viman Nagar, Wanowrie, Baner, Wakad, and across East & West Pune.
                   </p>
                 </div>
               </div>
 
+              {/* Google Business Direct Link */}
+              <div className="pt-3 pb-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200">
+                  <ShieldCheck size={14} />
+                  <span>Google Business Verified</span>
+                </div>
+                <a
+                  href={siteConfig.googleBusinessUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#102D50] hover:text-[#D71935] hover:underline transition-colors"
+                >
+                  <span>Open in Google Maps</span>
+                  <ExternalLink size={13} />
+                </a>
+              </div>
+
               {/* Verified Location Notice */}
-              <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200 text-xs text-slate-500">
+              <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200 text-xs text-slate-500 mt-2">
                 <div className="flex items-center gap-2 font-semibold text-slate-700 mb-1">
                   <Clock size={14} className="text-[#102D50]" />
                   <span>Consultation Hours</span>

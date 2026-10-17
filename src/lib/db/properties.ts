@@ -202,14 +202,116 @@ const initialProperties: Property[] = [
     images: [
       "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80"
     ],
-    featured: true,
+    featured: false,
     status: "available",
     is_published: true,
     created_at: new Date(Date.now() - 16 * 86400000).toISOString(),
+  },
+  {
+    id: "prop-9",
+    title: "Amanora Gateway Towers — 3 BHK Luxury Penthouse",
+    slug: "amanora-gateway-towers-3bhk-hadapsar",
+    description: "Skyline living in iconic Amanora Park Town, Hadapsar. Sweeping views of the central lake, Swarovski crystal interior accents, Italian marble, digital home automation, and private clubhouse privileges.",
+    category: "residential",
+    transaction_type: "buy",
+    price: 22500000,
+    price_label: "₹2.25 Cr",
+    location: "Hadapsar, Pune",
+    landmark: "Amanora Park Town, Hadapsar",
+    carpet_area: 1560,
+    built_up_area: 1980,
+    bedrooms: 3,
+    bathrooms: 3,
+    furnishing_status: "semi-furnished",
+    amenities: ["Lake View Balcony", "Clubhouse", "Infinity Pool", "2 Covered Car Parks", "24x7 Security", "Gymnasium", "Power Backup"],
+    images: [
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80"
+    ],
+    featured: true,
+    status: "available",
+    is_published: true,
+    created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+  },
+  {
+    id: "prop-10",
+    title: "Magarpatta Roystonea — 2 BHK Premium Apartment",
+    slug: "magarpatta-roystonea-2bhk-hadapsar",
+    description: "Situated inside the premier walk-to-work integrated Cybercity township of Magarpatta, Hadapsar. Walking distance from Cybercity IT towers, Destination Center, and Seasons Mall. Perfect for tech professionals and families.",
+    category: "residential",
+    transaction_type: "buy",
+    price: 11000000,
+    price_label: "₹1.10 Cr",
+    location: "Hadapsar, Pune",
+    landmark: "Magarpatta City, Hadapsar",
+    carpet_area: 980,
+    built_up_area: 1220,
+    bedrooms: 2,
+    bathrooms: 2,
+    furnishing_status: "semi-furnished",
+    amenities: ["Gated Township", "Children Play Area", "Lush Green Parks", "Reserved Parking", "High Speed Lifts", "24x7 Water Supply"],
+    images: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
+    ],
+    featured: true,
+    status: "available",
+    is_published: true,
+    created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+  },
+  {
+    id: "prop-11",
+    title: "Cybercity Business Hub — Commercial Office Space",
+    slug: "cybercity-business-hub-magarpatta-hadapsar",
+    description: "Ready plug-and-play corporate commercial office space located near Magarpatta City & Gadital hub. Modern reception, manager cabins, meeting room, and ample reserved multi-level basement parking.",
+    category: "commercial",
+    transaction_type: "rent",
+    price: 85000,
+    price_label: "₹85,000 / month",
+    location: "Hadapsar, Pune",
+    landmark: "Near Gadital Chowk & Magarpatta Road",
+    carpet_area: 1200,
+    built_up_area: 1550,
+    bedrooms: 0,
+    bathrooms: 2,
+    furnishing_status: "fully-furnished",
+    amenities: ["Central AC", "Conference Room", "High Speed Internet Provision", "100% DG Backup", "Visitor Parking", "BMS Security"],
+    images: [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+    ],
+    featured: false,
+    status: "available",
+    is_published: true,
+    created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+  },
+  {
+    id: "prop-12",
+    title: "Anand Greens — NA Collector Sanctioned Villa Plot",
+    slug: "anand-greens-na-plot-saswad-road-shewalwadi",
+    description: "Fully sanctioned Collector NA residential plot located off Saswad Road, Shewalwadi near Hadapsar. 100% clear title with separate 7/12 extract, compounded boundary, wide concrete internal road, and water-electricity connections ready for immediate bungalow construction.",
+    category: "plots",
+    transaction_type: "buy",
+    price: 5800000,
+    price_label: "₹58 Lakh",
+    location: "Hadapsar, Pune",
+    landmark: "Saswad Road, Shewalwadi, Hadapsar",
+    carpet_area: 2200,
+    built_up_area: 2200,
+    bedrooms: 0,
+    bathrooms: 0,
+    furnishing_status: "unfurnished",
+    amenities: ["Gated Layout", "Demarcated Plots", "Internal Concrete Road", "Water Supply", "Street Lights", "Clear 7/12 Extract"],
+    images: [
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"
+    ],
+    featured: true,
+    status: "available",
+    is_published: true,
+    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
   }
 ];
 
-const STORAGE_KEY = "arth_properties_v1";
+const STORAGE_KEY = "arth_properties_v2";
 
 function loadFromStorage(): Property[] {
   if (typeof window !== "undefined") {

@@ -75,10 +75,21 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
           
-          {/* Tagline Badge with Micro-hover */}
-          <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-widest text-slate-200 mb-6 transition-all duration-300 hover:scale-105 shadow-lg">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#D71935] animate-pulse" />
-            <span>{siteConfig.secondaryTagline}</span>
+          {/* Tagline Badge with Micro-hover & Google Verified Link */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-widest text-slate-200 transition-all duration-300 hover:scale-105 shadow-lg">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#D71935] animate-pulse" />
+              <span>{siteConfig.secondaryTagline}</span>
+            </div>
+            <a
+              href={siteConfig.googleBusinessUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 hover:text-white backdrop-blur-md border border-emerald-400/30 px-3.5 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 hover:scale-105"
+            >
+              <ShieldCheck size={14} className="text-emerald-400" />
+              <span>Google Verified &bull; Hadapsar, Pune</span>
+            </a>
           </div>
 
           {/* Headline */}
@@ -158,7 +169,7 @@ export default function HomePage() {
                     type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    placeholder="e.g. Baner, Kharadi, Wakad"
+                    placeholder="e.g. Hadapsar, Magarpatta, Kharadi, Baner"
                     className="w-full bg-slate-50 border border-slate-200 py-3 pl-10 pr-3.5 rounded-xl text-sm sm:text-base text-[#102D50] placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-[#102D50] focus:bg-white transition-all"
                   />
                 </div>
@@ -242,7 +253,7 @@ export default function HomePage() {
                   Residential Homes
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                  2, 3, and 4 BHK luxury apartments, penthouses, and gated villas in Baner, Kharadi, and Koregaon Park.
+                  1, 2, 3, and 4 BHK luxury & budget flats, penthouses, and row houses in Hadapsar, Magarpatta City, Amanora, Kharadi, and Koregaon Park.
                 </p>
               </div>
               <span className="text-sm font-bold text-[#D71935] flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
@@ -265,7 +276,7 @@ export default function HomePage() {
                   Commercial Spaces
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                  Grade-A office floors, high-street retail showrooms, and corporate pre-leased assets in Viman Nagar and Baner.
+                  Grade-A office floors, high-street retail shops, and corporate pre-leased assets in Magarpatta Cybercity, Kharadi, and Viman Nagar.
                 </p>
               </div>
               <span className="text-sm font-bold text-[#D71935] flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
@@ -288,7 +299,7 @@ export default function HomePage() {
                   Plots & Land
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                  Collector NA sanctioned villa plots and development land parcels in Bavdhan, Pirangut, and growth corridors.
+                  Collector NA sanctioned villa plots and development land parcels in Saswad Road, Shewalwadi, Hadapsar, and Bavdhan.
                 </p>
               </div>
               <span className="text-sm font-bold text-emerald-700 flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
@@ -416,7 +427,7 @@ export default function HomePage() {
                       Hyper-Local Pune Intelligence
                     </h4>
                     <p className="text-sm text-slate-600 leading-relaxed mt-1">
-                      From upcoming metro extensions on Baner Road to commercial absorption in Kharadi IT hubs, we ensure your purchase has proven capital appreciation potential.
+                      From Magarpatta Cybercity and Hadapsar expansions to Saswad Road growth corridors and Kharadi IT hubs, we ensure your purchase has proven capital appreciation potential.
                     </p>
                   </div>
                 </div>

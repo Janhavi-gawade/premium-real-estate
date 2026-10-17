@@ -39,7 +39,7 @@ export default function ServicesPage() {
               Property Buying Assistance
             </h2>
             <p className="text-slate-600 text-sm leading-relaxed mb-6">
-              Finding the right home is more than browsing photos. We curate properties matching your exact life stage, budget, and commute preferences across Baner, Kharadi, Koregaon Park, Wakad, and Kothrud.
+              Finding the right home is more than browsing photos. We curate properties matching your exact life stage, budget, and commute preferences across Hadapsar, Magarpatta City, Amanora, Kharadi, Koregaon Park, Baner, and Wakad.
             </p>
             <ul className="space-y-2.5 text-xs text-slate-700 mb-8">
               <li className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export default function ServicesPage() {
               Plots & Real Estate Investment Advisory
             </h2>
             <p className="text-slate-600 text-sm leading-relaxed mb-6">
-              Strategic capital allocation in Pune's high-growth corridors. We identify collector-approved NA villa plots, pre-leased commercial office units, and land parcels with strong appreciation tailwinds.
+              Strategic capital allocation in Pune's high-growth corridors. We identify collector-approved NA villa plots, pre-leased commercial office units, and land parcels across Hadapsar, Saswad Road, Shewalwadi, and Bavdhan with strong appreciation tailwinds.
             </p>
             <Link
               href="/properties?category=plots"

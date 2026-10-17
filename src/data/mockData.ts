@@ -98,14 +98,14 @@ export const properties = [
 ];
 
 export const areas = [
-  { name: "Koregaon Park", count: 45, image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" },
-  { name: "Kalyani Nagar", count: 32, image: "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=600&q=80" },
-  { name: "Viman Nagar", count: 28, image: "https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=600&q=80" },
+  { name: "Hadapsar", count: 52, image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
+  { name: "Magarpatta City", count: 38, image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" },
+  { name: "Amanora Park Town", count: 29, image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" },
+  { name: "Shewalwadi", count: 21, image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" },
   { name: "Kharadi", count: 42, image: "https://images.unsplash.com/photo-1508212457917-063a8a649bb7?auto=format&fit=crop&w=600&q=80" },
-  { name: "Baner", count: 35, image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" },
-  { name: "Bavdhan", count: 18, image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80" },
-  { name: "Wakad", count: 25, image: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=600&q=80" },
-  { name: "NIBM", count: 22, image: "https://images.unsplash.com/photo-1515263487920-c751a0c64572?auto=format&fit=crop&w=600&q=80" },
+  { name: "Koregaon Park", count: 45, image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" },
+  { name: "Baner", count: 35, image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" },
+  { name: "Viman Nagar", count: 28, image: "https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=600&q=80" },
 ];
 
 export const testimonials = [
