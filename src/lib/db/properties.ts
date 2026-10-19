@@ -1,9 +1,11 @@
 import { Property, PropertyFilterParams } from "@/types";
 import { formatIndianPrice, slugify } from "@/lib/utils/formatters";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { userImportedProperties } from "@/lib/data/userProperties";
 
-// Initial seed data for Pune properties
+// Initial seed data with user properties included
 const initialProperties: Property[] = [
+  ...userImportedProperties,
   {
     id: "prop-1",
     title: "The Sovereign Grandeur — 3 BHK Luxury Apartment",
@@ -320,6 +322,13 @@ function loadFromStorage(): Property[] {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
+          const existingIds = new Set(parsed.map((p: Property) => p.id));
+          const missingProps = userImportedProperties.filter(p => !existingIds.has(p.id));
+          if (missingProps.length > 0) {
+            const merged = [...missingProps, ...parsed];
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+            return merged;
+          }
           return parsed;
         }
       }
