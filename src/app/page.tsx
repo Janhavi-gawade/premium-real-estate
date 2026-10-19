@@ -41,7 +41,10 @@ export default function HomePage() {
     async function loadData() {
       try {
         const allProps = await getProperties();
-        setFeaturedProperties(allProps.filter(p => p.featured).slice(0, 3));
+        const featured = allProps.filter(p => p.featured);
+        // Prioritize featured, and include recently added properties up to 6
+        const combined = [...featured, ...allProps.filter(p => !p.featured)];
+        setFeaturedProperties(combined.slice(0, 6));
       } catch (err) {
         console.error("Failed to load properties:", err);
       } finally {

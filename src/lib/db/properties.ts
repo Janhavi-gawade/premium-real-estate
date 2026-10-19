@@ -352,8 +352,67 @@ export async function getProperties(
   params: PropertyFilterParams = {},
   includeUnpublished: boolean = false
 ): Promise<Property[]> {
-  // If Supabase is configured, fetch from PostgreSQL
+  // If Supabase is configured, check if any local properties need to be synced first!
   if (isSupabaseConfigured && supabase) {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const localItems = JSON.parse(saved);
+          if (Array.isArray(localItems)) {
+            // Find items that are user-added (i.e. not the default prop-1 to prop-12 seed)
+            const seedIds = new Set(initialProperties.map(p => p.id));
+            const userAdded = localItems.filter(p => !seedIds.has(p.id));
+            
+            if (userAdded.length > 0) {
+              const { data: existing } = await supabase.from('properties').select('title, slug');
+              const existingTitles = new Set((existing || []).map(p => (p.title || '').toLowerCase().trim()));
+              const existingSlugs = new Set((existing || []).map(p => p.slug));
+
+              for (const prop of userAdded) {
+                const titleKey = (prop.title || '').toLowerCase().trim();
+                if (!titleKey || existingTitles.has(titleKey)) continue;
+
+                let baseSlug = prop.slug || slugify(`${prop.title}-${prop.location || 'pune'}`);
+                if (existingSlugs.has(baseSlug)) {
+                  baseSlug = `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`;
+                }
+
+                const { error: insErr } = await supabase.from('properties').insert([{
+                  title: prop.title,
+                  slug: baseSlug,
+                  description: prop.description || `${prop.title} located in ${prop.location || 'Pune'}.`,
+                  category: prop.category || 'residential',
+                  transaction_type: prop.transaction_type || 'buy',
+                  price: Number(prop.price) || 0,
+                  price_label: prop.price_label || '',
+                  location: prop.location || 'Pune',
+                  landmark: prop.landmark || '',
+                  carpet_area: Number(prop.carpet_area) || 0,
+                  built_up_area: prop.built_up_area ? Number(prop.built_up_area) : null,
+                  bedrooms: Number(prop.bedrooms) || 0,
+                  bathrooms: Number(prop.bathrooms) || 0,
+                  furnishing_status: prop.furnishing_status || 'unfurnished',
+                  amenities: Array.isArray(prop.amenities) ? prop.amenities : [],
+                  images: Array.isArray(prop.images) && prop.images.length > 0 ? prop.images : [initialProperties[0].images[0]],
+                  featured: Boolean(prop.featured),
+                  status: prop.status || 'available',
+                  is_published: prop.is_published ?? true,
+                }]);
+
+                if (!insErr) {
+                  existingTitles.add(titleKey);
+                  existingSlugs.add(baseSlug);
+                }
+              }
+            }
+          }
+        }
+      } catch (syncErr) {
+        console.warn("Auto-sync from localStorage to Supabase:", syncErr);
+      }
+    }
+
     try {
       let query = supabase.from('properties').select('*');
 

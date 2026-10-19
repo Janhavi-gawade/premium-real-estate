@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { Property, PropertyCategory, TransactionType, PropertyStatus, FurnishingStatus } from "@/types";
 import { getProperties, createProperty, updateProperty, deleteProperty } from "@/lib/db/properties";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { formatIndianPrice, formatArea, slugify } from "@/lib/utils/formatters";
 import { processMultipleImageFiles } from "@/lib/utils/imageUpload";
 
@@ -477,10 +478,22 @@ export default function AdminPropertiesPage() {
       {/* HEADER & QUICK STATS */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            <Building2 className="text-[#D71935]" size={26} />
-            Property Management
-          </h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+              <Building2 className="text-[#D71935]" size={26} />
+              Property Management
+            </h1>
+            {isSupabaseConfigured ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Cloud Synced (Visible on all devices)
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                Local Cache Only (Connecting...)
+              </span>
+            )}
+          </div>
           <p className="text-sm text-slate-500 mt-1">
             Create, update, toggle availability status, and control public visibility of all listings.
           </p>
@@ -995,21 +1008,69 @@ export default function AdminPropertiesPage() {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Price (in INR) *
+                      Price * <span className="font-normal text-slate-500">(e.g. 1.92 Cr, 85 Lakh, or ₹)</span>
                     </label>
-                    <div className="relative">
-                      <IndianRupee size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                      <input
-                        type="number"
-                        required
-                        min="0"
-                        value={formData.price}
-                        onChange={(e) => handlePriceChange(Number(e.target.value))}
-                        className="w-full pl-9 pr-3.5 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#102D50] focus:outline-hidden"
-                      />
+                    <div className="flex gap-2">
+                      <div className="relative flex-1">
+                        <IndianRupee size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                        <input
+                          type="text"
+                          required
+                          value={formData.price_label ? formData.price_label.replace(/^₹\s*/, '') : (formData.price ? String(formData.price) : '')}
+                          onChange={(e) => {
+                            const val = e.target.value.trim();
+                            const crMatch = val.match(/^([\d.]+)\s*(?:cr|crore|crores)?$/i);
+                            const lakhMatch = val.match(/^([\d.]+)\s*(?:lakh|lakhs|lac|lacs|l)$/i);
+                            if (lakhMatch) {
+                              const num = parseFloat(lakhMatch[1]);
+                              setFormData(prev => ({
+                                ...prev,
+                                price: Math.round(num * 100000),
+                                price_label: `₹${lakhMatch[1]} Lakh`
+                              }));
+                            } else if (crMatch && (val.toLowerCase().includes('cr') || parseFloat(crMatch[1]) < 100)) {
+                              const num = parseFloat(crMatch[1]);
+                              setFormData(prev => ({
+                                ...prev,
+                                price: Math.round(num * 10000000),
+                                price_label: `₹${crMatch[1]} Cr`
+                              }));
+                            } else {
+                              const rawNum = Number(val.replace(/[^\d.]/g, ''));
+                              handlePriceChange(isNaN(rawNum) ? 0 : rawNum);
+                            }
+                          }}
+                          placeholder="e.g. 1.92 Cr or 85 Lakh"
+                          className="w-full pl-9 pr-3.5 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#102D50] focus:outline-hidden"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const num = prompt("Enter price in Crores (e.g. 1.92):");
+                          if (num && !isNaN(parseFloat(num))) {
+                            setFormData(prev => ({
+                              ...prev,
+                              price: Math.round(parseFloat(num) * 10000000),
+                              price_label: `₹${num} Cr`
+                            }));
+                          }
+                        }}
+                        className="px-2.5 py-1 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium border border-slate-300"
+                      >
+                        + Cr
+                      </button>
                     </div>
-                    <div className="text-[11px] text-emerald-600 font-semibold mt-1">
-                      Display Label: {formData.price_label}
+                    <div className="flex items-center justify-between text-[11px] mt-1.5 flex-wrap gap-1">
+                      <span className="text-emerald-600 font-semibold">
+                        Preview: {formData.price_label || '₹0'}
+                      </span>
+                      <div className="flex gap-1.5 text-slate-500 items-center">
+                        <span>Quick:</span>
+                        <button type="button" onClick={() => setFormData(p => ({ ...p, price: 19200000, price_label: "₹1.92 Cr" }))} className="px-1.5 py-0.5 bg-slate-100 rounded text-[10px] hover:bg-slate-200">1.92 Cr</button>
+                        <button type="button" onClick={() => setFormData(p => ({ ...p, price: 25000000, price_label: "₹2.50 Cr" }))} className="px-1.5 py-0.5 bg-slate-100 rounded text-[10px] hover:bg-slate-200">2.5 Cr</button>
+                        <button type="button" onClick={() => setFormData(p => ({ ...p, price: 8500000, price_label: "₹85 Lakh" }))} className="px-1.5 py-0.5 bg-slate-100 rounded text-[10px] hover:bg-slate-200">85 Lakh</button>
+                      </div>
                     </div>
                   </div>
                 </div>
