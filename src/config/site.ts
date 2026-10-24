@@ -10,6 +10,8 @@ export const siteConfig = {
   founder: {
     name: "Monali Khedekar",
     role: "Founder & Principal Real Estate Consultant",
+    image: "/monali-khedekar.jpg",
+    avatar: "/monali-khedekar-square.jpg",
     bio: "With deep-rooted expertise across Hadapsar, Magarpatta City, Amanora, Kharadi, Koregaon Park, and prime Pune micro-markets, Monali Khedekar guides homebuyers, investors, and landowners with verified listings, transparent negotiations, and end-to-end legal and registration assistance.",
     location: "Hadapsar, Pune, Maharashtra, India",
   },

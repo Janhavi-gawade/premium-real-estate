@@ -33,10 +33,10 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
           <div className="relative h-[480px] sm:h-[560px] rounded-2xl overflow-hidden shadow-xl border border-slate-200">
             <Image
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80"
-              alt="Monali Khedekar - Real Estate Professional at Arth Properties Pune"
+              src="/monali-khedekar.jpg"
+              alt="Monali Khedekar - Founder & Principal Consultant at Arth Properties Pune"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#102D50]/90 via-transparent to-transparent" />

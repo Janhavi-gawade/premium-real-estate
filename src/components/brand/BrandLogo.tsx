@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface BrandLogoProps {
   variant?: "dark" | "light"; // dark = for light backgrounds; light = for dark backgrounds
   showTagline?: boolean;
   className?: string;
   size?: "sm" | "md" | "lg";
+  layout?: "horizontal" | "stacked";
 }
 
 export default function BrandLogo({
@@ -12,77 +14,39 @@ export default function BrandLogo({
   showTagline = false,
   className = "",
   size = "md",
+  layout = "horizontal",
 }: BrandLogoProps) {
   const isLight = variant === "light";
 
-  const sizeClasses = {
-    sm: "text-lg",
-    md: "text-2xl",
-    lg: "text-3xl md:text-4xl",
-  };
+  // Height sizing for the logo mark
+  const heightClass = {
+    sm: "h-9",
+    md: "h-11 sm:h-12",
+    lg: "h-16 sm:h-20",
+  }[size];
 
-  const iconSizes = {
-    sm: { width: 28, height: 28 },
-    md: { width: 36, height: 36 },
-    lg: { width: 48, height: 48 },
-  };
+  // Dynamic selection between horizontal and stacked logo variants
+  const useStacked = layout === "stacked" || (size === "lg" && showTagline);
 
-  const primaryColor = isLight ? "#FFFFFF" : "#102D50";
-  const textColor = isLight ? "text-white" : "text-[#102D50]";
-  const subTextColor = isLight ? "text-slate-300" : "text-slate-500";
+  const logoSrc = useStacked
+    ? (isLight ? "/logo-white-text.png" : "/logo-transparent.png")
+    : (isLight ? "/logo-horizontal-white.png" : "/logo-horizontal.png");
 
   return (
-    <Link href="/" className={`inline-flex items-center gap-3 group transition-opacity hover:opacity-95 ${className}`}>
-      {/* Brand Icon: Architectural geometric 'A' & house apex */}
-      <svg
-        width={iconSizes[size].width}
-        height={iconSizes[size].height}
-        viewBox="0 0 48 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
-      >
-        {/* Background shield/foundation */}
-        <rect width="48" height="48" rx="8" fill={isLight ? "rgba(255,255,255,0.12)" : "#102D50"} />
-        
-        {/* Main Architectural Apex (Roof/A structure) */}
-        <path
-          d="M24 10L10 24H16V36H32V24H38L24 10Z"
-          fill="none"
-          stroke={isLight ? "#FFFFFF" : "#FFFFFF"}
-          strokeWidth="2.5"
-          strokeLinejoin="round"
+    <Link
+      href="/"
+      className={`inline-flex items-center group transition-all duration-300 hover:opacity-95 ${className}`}
+      aria-label="Arth Properties — The Value Behind Every Home"
+    >
+      <div className={`relative ${heightClass} w-auto flex items-center`}>
+        <Image
+          src={logoSrc}
+          alt="Arth Properties — The Value Behind Every Home"
+          width={useStacked ? 220 : 280}
+          height={useStacked ? 176 : 56}
+          className={`${heightClass} w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]`}
+          priority
         />
-        
-        {/* Stylized 'A' crossbar and apex core in Brand Red */}
-        <path
-          d="M24 14L17 26H31L24 14Z"
-          fill="#D71935"
-        />
-        
-        {/* Inner doorway signifying home / value */}
-        <path
-          d="M21 36V28H27V36"
-          stroke={isLight ? "#102D50" : "#FFFFFF"}
-          strokeWidth="2.5"
-          fill={isLight ? "#FFFFFF" : "#102D50"}
-        />
-      </svg>
-
-      <div className="flex flex-col">
-        <div className="flex items-baseline tracking-tight">
-          <span className={`font-serif font-black ${sizeClasses[size]} ${textColor} tracking-wider`}>
-            ARTH
-          </span>
-          <span className="font-sans font-bold text-xs uppercase tracking-[0.25em] text-[#D71935] ml-2">
-            PROPERTIES
-          </span>
-        </div>
-        {showTagline && (
-          <span className={`text-[10px] tracking-wider uppercase font-medium ${subTextColor} -mt-0.5`}>
-            The Value Behind Every Home
-          </span>
-        )}
       </div>
     </Link>
   );

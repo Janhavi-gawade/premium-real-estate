@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Building2, 
   MessageSquare, 
@@ -111,8 +112,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Administrator Badge */}
         <div className="px-6 py-4 bg-[#0A1C33]/60 border-b border-slate-800 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#D71935] flex items-center justify-center font-bold text-xs text-white">
-            MK
+          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-red-500/30 flex-shrink-0 shadow-xs">
+            <Image
+              src="/monali-khedekar-square.jpg"
+              alt="Monali Khedekar"
+              fill
+              className="object-cover"
+            />
           </div>
           <div className="overflow-hidden">
             <span className="text-xs font-bold text-white block truncate">

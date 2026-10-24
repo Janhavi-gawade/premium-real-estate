@@ -469,13 +469,13 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Visual representation */}
+            {/* Visual representation - Monali Khedekar */}
             <div className="group relative h-[520px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
               <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-                alt="Arth Properties Executive Consultation"
+                src="/monali-khedekar.jpg"
+                alt="Monali Khedekar - Founder & Principal Consultant at Arth Properties, Hadapsar, Pune"
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A1C33]/95 via-transparent to-transparent" />
               
